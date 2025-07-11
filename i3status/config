@@ -1,6 +1,6 @@
 general {
     colors = true
-    interval = 5
+    interval = 1
 }
 
 order += "wireless _first_"
@@ -15,36 +15,41 @@ order += "battery all"
 order += "tztime local"
 
 wireless _first_ {
-    format_up = "%essid %quality"
-    format_down = "NONE"
+    format_up = "%essid (%quality)"
+    format_down = ""
 }
 
 ethernet _first_ {
-    format_up = "%ip"
-    format_down = "NONE"
+    format_up = "%ip (%speed)"
+    format_down = ""
 }
 
 volume master {
-    format = "VOL %volume"
-    format_muted = "MUTED"
+    format = "Vol %volume"
+    format_muted = "Muted (%volume)"
     device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}
+
+load {
+    format = "%1min"
+    max_threshold = 2.0
 }
 
 cpu_usage {
     format = "%usage"
 }
 
-load {
-    format = "%1min"
-}
-
 cpu_temperature 0 {
     format = "%degrees°C"
     path = "/sys/class/thermal/thermal_zone0/temp"
+    max_threshold = 70
 }
 
 memory {
     format = "%used"
+    threshold_degraded = "8G"
 }
 
 disk "/" {
@@ -54,10 +59,12 @@ disk "/" {
 battery all {
     format = "%status %percentage %remaining"
     format_down = "No battery"
-    last_full_capacity = true
+    low_threshold = 20
+    threshold_type = "percentage"
     integer_battery_capacity = true
+    last_full_capacity = true
 }
 
 tztime local {
-    format = "%d/%m %H:%M "
+    format = "%a, %d %b, %H:%M "
 }

@@ -17,17 +17,15 @@ client.urgent           #ff0000 #000000 #ffffff #ff0000   #ff0000
 client.placeholder      #000000 #000000 #ffffff #000000   #000000
 
 # exec --no-startup-id dex --autostart --environment i3
+
 # exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-# exec --no-startup-id blueman-applet &
-# exec --no-startup-id picom -b --backend glx --no-fading-openclose --no-fading-destroyed-argb
-# exec --no-startup-id picom -b
 
 exec --no-startup-id tlp start
 
 exec --no-startup-id setxkbmap -model pc105 -layout fo,ua -variant nodeadkeys -option grp:lctrl_lwin_toggle
 
 exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
-exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 1
+exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 0
 exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Two-finger Scrolling Enabled" 1
 
 set $refresh_i3status pkill -RTMIN+10 i3blocks || pkill -SIGUSR1 i3status
@@ -135,17 +133,16 @@ mode "resize" {
     bindsym Escape mode "default"
     bindsym $mod+r mode "default"
 }
-
 bindsym $mod+r mode "resize"
 
-set $mode_system System (l)ock, (e)xit, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+set $mode_system (1)Lock, (2)Suspend, (3)Reboot, (4)Shutdown, (5)Kill apps, (6)Kill session
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3lock, mode "default"
-    bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+    bindsym 1 exec --no-startup-id i3lock -c 000000, mode "default"
+    bindsym 2 exec --no-startup-id systemctl suspend, mode "default"
+    bindsym 3 exec --no-startup-id systemctl reboot, mode "default"
+    bindsym 4 exec --no-startup-id systemctl poweroff -i, mode "default"
+    bindsym 5 exec --no-startup-id i3-msg '[class=".*"] kill', mode "default"
+    bindsym 6 exec --no-startup-id loginctl terminate-user $USER, mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -161,7 +158,7 @@ bar {
     colors {
         background #000000
         statusline #ffffff
-        separator #555555
+        separator #777777
 
         focused_workspace  #000000 #000000 #ffffff
         active_workspace   #ffffff #000000 #ffffff
