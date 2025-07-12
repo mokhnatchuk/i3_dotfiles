@@ -7,10 +7,10 @@ force_display_urgency_hint 0 ms
 
 font pango:monospace 11
 hide_edge_borders smart
-default_border pixel 1
-default_floating_border pixel 1
+default_border pixel
+default_floating_border pixel
 
-client.focused          #333333 #000000 #ffffff #333333   #333333
+client.focused          #111111 #000000 #ffffff #111111   #111111
 client.focused_inactive #000000 #000000 #ffffff #000000   #000000
 client.unfocused        #000000 #000000 #888888 #000000   #000000
 client.urgent           #ff0000 #000000 #ffffff #ff0000   #ff0000
@@ -22,13 +22,13 @@ client.placeholder      #000000 #000000 #ffffff #000000   #000000
 
 exec --no-startup-id tlp start
 
-exec --no-startup-id setxkbmap -model pc105 -layout fo,ua -variant nodeadkeys -option grp:lctrl_lwin_toggle
+# exec --no-startup-id setxkbmap -model pc105 -layout fo,ua -variant nodeadkeys -option grp:lctrl_lwin_toggle
 
 exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 0
 exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Two-finger Scrolling Enabled" 1
 
-set $refresh_i3status pkill -RTMIN+10 i3blocks || pkill -SIGUSR1 i3status
+set $refresh_i3status pkill -SIGUSR1 i3status
 
 floating_modifier $mod
 
@@ -135,7 +135,7 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-set $mode_system (1)Lock, (2)Suspend, (3)Reboot, (4)Shutdown, (5)Kill apps, (6)Kill session
+set $mode_system (1)Lock  (2)Suspend  (3)Reboot  (4)Shutdown  (5)Kill apps  (6)Kill session
 mode "$mode_system" {
     bindsym 1 exec --no-startup-id i3lock -c 000000, mode "default"
     bindsym 2 exec --no-startup-id systemctl suspend, mode "default"
@@ -151,7 +151,7 @@ bindsym $mod+Shift+q mode "$mode_system"
 bar {
     status_command i3status
     position top
-    separator_symbol " | "
+    separator_symbol " ⁝ "
     workspace_buttons yes
     strip_workspace_numbers no
 
@@ -162,7 +162,7 @@ bar {
 
         focused_workspace  #000000 #000000 #ffffff
         active_workspace   #ffffff #000000 #ffffff
-        inactive_workspace #000000 #000000 #777777
+        inactive_workspace #000000 #000000 #555555
         urgent_workspace   #ff0000 #000000 #ffffff
         binding_mode       #ffff00 #000000 #ffffff
     }
